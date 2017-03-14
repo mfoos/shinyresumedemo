@@ -35,6 +35,7 @@ ui <- fluidPage(
                                  "PDF" = "pdf_document",
                                  "Word" = "word_document")),
         actionButton("goknit", "I am the plan")
+        
       ),
       
       mainPanel(
@@ -49,8 +50,6 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   reportdone <- eventReactive(input$goknit, {
-    withProgress(value = 0, message = "Knitting...",
-      { incProgress(.2)
         render("bsummers_resume.Rmd",
              output_format = isolate(input$format),
              params = list(
@@ -58,10 +57,7 @@ server <- function(input, output) {
                dblmt_strings = isolate(input$dblmt),
                incl_address = isolate(input$incl_address),
                incl_orgs = isolate(input$incl_orgs),
-               skills = isolate(input$skills)
-             ))
-      incProgress(.5)
-      })
+               skills = isolate(input$skills)))
   })
   
   output$buttonappear <- renderUI({
