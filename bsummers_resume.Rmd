@@ -1,0 +1,65 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+params:
+  shs_strings: Counsel kids
+  dblmt_strings: Serve Meats
+  incl_address: 1
+  incl_orgs: 1
+  skills: Microsoft Office
+---
+
+# Buffy Summers
+\vspace{-5mm}
+**[buffy@gmail.com](mailto:buffy@gmail.com) • [https://www.linkedin.com/in/buffysummers](https://www.linkedin.com/in/buffysummers)**  
+`r if(params$incl_address){"**1630 Revello Drive, Sunnydale, CA 90501 • (555)123-4567**  "}`
+
+---
+
+\vspace{-5mm}
+
+### Employment
+
+`r if(length(params$shs_strings) > 0){"**Youth Counselor**  
+**Sunnydale High School, Sunnydale, CA**  
+September 2002 – May 2003"}`
+
+`r if(length(params$shs_strings) > 0){paste0("* ", paste(params$shs_strings, collapse = "\n* "))}`
+
+`r if(length(params$dblmt_strings) > 0){"**Team Member**  
+**Doublemeat Palace, Sunnydale, CA**  
+January 2002 - September 2002"}`  
+
+`r if(length(params$dblmt_strings) > 0){paste0("* ", paste(params$dblmt_strings, collapse = "\n* "))}`
+
+`r if (length(params$skills) > 0){"---"}`
+
+\vspace{-5mm}
+
+`r if (length(params$skills) > 0){"#### Skills"}`
+
+`r if (length(params$skills) > 0){paste0("* ", paste(params$skills, collapse = ", "))}`
+
+---
+
+\vspace{-5mm}
+
+### Education
+
+**University of California Sunnydale**  
+Sunnydale, CA  
+_Coursework in Psycology, 1999-2001_
+
+**Sunnydale High School**  
+Sunnydale, CA  
+_1996-1999_
+
+`r if(params$incl_orgs){"---"}`
+
+\vspace{-5mm}
+
+`r if(params$incl_orgs){"### Organizations
+
+* Sunnydale High School Cheer Squad  "}`
