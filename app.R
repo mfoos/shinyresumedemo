@@ -9,6 +9,10 @@ dblmtlines <- c("Employee of the month - March 2002",
                 "Promoted to grill after one day",
                 "Closed with 100% drawer accuracy")
 
+watcherslines <- c("Died twice",
+                   "Earned inaugural Class Protector award",
+                   "Saved the world. A lot.")
+
 skills <- c("Microsoft Office",
             "Research",
             "Mentoring",
@@ -23,11 +27,12 @@ ui <- fluidPage(
       sidebarPanel(
         checkboxInput("incl_address", "Include contact info", value = TRUE),
         checkboxGroupInput("employers", "Choose employers to include:", 
-                           choices = c("Doublemeat Palace", "Sunnydale High School"),
-                           selected = c("Doublemeat Palace", "Sunnydale High School")),
+                           choices = c("Doublemeat Palace", "Sunnydale High School", "Watchers Council"),
+                           selected = c("Doublemeat Palace", "Sunnydale High School", "Watchers Council")),
         uiOutput("choose_emp"),
         uiOutput("choose_emp2"),
-        selectizeInput("skills", "Choose skills", choices = skills,
+        uiOutput("choose_emp3"),
+        selectizeInput("skills", "Choose skills:", choices = skills,
                        multiple = TRUE, options = list(plugins = list('drag_drop'))),
         checkboxInput("incl_orgs", "Include organizations", value = TRUE),
         radioButtons("format", "Output format:", 
@@ -55,6 +60,7 @@ server <- function(input, output) {
              params = list(
                shs_strings = isolate(input$shs),
                dblmt_strings = isolate(input$dblmt),
+               watcher_strings = isolate(input$wc),
                incl_address = isolate(input$incl_address),
                incl_orgs = isolate(input$incl_orgs),
                skills = isolate(input$skills)))
@@ -87,6 +93,9 @@ server <- function(input, output) {
        if (!(is.null(input$dblmt))){
          rlist <- c(rlist, c("DOUBLEMEAT PALACE", input$dblmt))
        }
+       if (!(is.null(input$wc))){
+         rlist <- c(rlist, c("WATCHERS COUNCIL", input$wc))
+       }
        data.frame("Employers" = rlist)
      }
    })
@@ -105,6 +114,13 @@ server <- function(input, output) {
    output$choose_emp2 <- renderUI({
      if ("Doublemeat Palace" %in% input$employers){
        selectizeInput("dblmt", "Choose accomplishments for Doublemeat Palace:", choices = dblmtlines,
+                      multiple = TRUE, options = list(plugins = list('drag_drop')))
+     }
+   })
+   
+   output$choose_emp3 <- renderUI({
+     if ("Watchers Council" %in% input$employers){
+       selectizeInput("wc", "Choose accomplishments for Watchers Council:", choices = watcherslines,
                       multiple = TRUE, options = list(plugins = list('drag_drop')))
      }
    })

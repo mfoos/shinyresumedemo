@@ -6,6 +6,7 @@ output:
 params:
   shs_strings: Counsel kids
   dblmt_strings: Serve Meats
+  watcher_strings: Kill Vampires
   incl_address: 1
   incl_orgs: 1
   skills: Microsoft Office
@@ -21,6 +22,12 @@ params:
 \vspace{-5mm}
 
 ### Employment
+
+`r if(length(params$watcher_strings) > 0){"**Vampire Slayer**  
+**Watchers Council, Sunnydale, CA (remote)**  
+October 1996 – Present"}`  
+
+`r if(length(params$watcher_strings) > 0){paste0("* ", paste(params$watcher_strings, collapse = "\n* "))}`
 
 `r if(length(params$shs_strings) > 0){"**Youth Counselor**  
 **Sunnydale High School, Sunnydale, CA**  
