@@ -29,9 +29,9 @@ ui <- fluidPage(
         checkboxGroupInput("employers", "Choose employers to include:", 
                            choices = c("Doublemeat Palace", "Sunnydale High School", "Watchers Council"),
                            selected = c("Doublemeat Palace", "Sunnydale High School", "Watchers Council")),
+        uiOutput("choose_emp3"),
         uiOutput("choose_emp"),
         uiOutput("choose_emp2"),
-        uiOutput("choose_emp3"),
         selectizeInput("skills", "Choose skills:", choices = skills,
                        multiple = TRUE, options = list(plugins = list('drag_drop'))),
         checkboxInput("incl_orgs", "Include organizations", value = TRUE),
@@ -87,14 +87,14 @@ server <- function(input, output) {
    output$preview <- renderTable({
      if (length(input$employers) > 0){
        rlist <- NULL
+       if (!(is.null(input$wc))){
+         rlist <- c(rlist, c("WATCHERS COUNCIL", input$wc))
+       }
        if (!(is.null(input$shs))){
          rlist <- c(rlist, c("SUNNYDALE HIGH", input$shs))
        }
        if (!(is.null(input$dblmt))){
          rlist <- c(rlist, c("DOUBLEMEAT PALACE", input$dblmt))
-       }
-       if (!(is.null(input$wc))){
-         rlist <- c(rlist, c("WATCHERS COUNCIL", input$wc))
        }
        data.frame("Employers" = rlist)
      }
